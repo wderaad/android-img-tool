@@ -7,6 +7,8 @@
 
 ### Using Opencv with java Buffered Image examples
 ```
+    private BufferedImage image;
+
     private BufferedImage blur(){
         byte[] resultPixels;
         Mat destination = new Mat();
@@ -201,4 +203,5 @@
         }
         return result;
     }
-    ```
+    
+```
