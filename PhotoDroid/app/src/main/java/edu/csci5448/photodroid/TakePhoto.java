@@ -1,13 +1,15 @@
 package edu.csci5448.photodroid;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
 
-public class MainActivity extends Activity {
+public class TakePhoto extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,17 +22,6 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    public void onLoadPhoto(View v){
-        Intent intent = new Intent(this, LoadPhoto.class);
-        startActivity(intent);
-    }
-
-    public void onTakePhoto(View v){
-        Intent intent = new Intent(this, TakePhoto.class);
-        startActivity(intent);
-
     }
 
     @Override
@@ -47,4 +38,5 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
