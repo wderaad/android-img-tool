@@ -1,5 +1,6 @@
 package edu.csci5448.photodroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,13 +10,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+// Code adapted from http://javatechig.com/android/writing-image-picker-using-intent-in-android
 public class LoadPhoto extends AppCompatActivity {
-
+    private final int SELECT_PHOTO=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i,SELECT_PHOTO);
     }
 
     @Override

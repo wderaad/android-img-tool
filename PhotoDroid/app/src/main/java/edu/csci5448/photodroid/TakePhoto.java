@@ -8,13 +8,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.hardware.Camera;
+import android.widget.FrameLayout;
 
-public class TakePhoto extends AppCompatActivity {
-
+// Some code adapted from http://developer.android.com/guide/topics/media/camera.html#custom-camera
+public class
+        TakePhoto extends AppCompatActivity {
+        private Camera mCamera;
+        private CameraPreview mPreview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_take_photo);
+        try {
+            mCamera = Camera.open();
+        }
+        catch(Exception e) {
+        }
+        mCamera.setDisplayOrientation(90);
+        mPreview= new CameraPreview(this,mCamera);
+        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview.addView(mPreview);
     }
 
     @Override
