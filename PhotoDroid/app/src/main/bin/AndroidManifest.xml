@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.csci5448.photodroid" >
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-=======
     
     <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="23" />
     
->>>>>>> 622368ad41cb47d6a92d6d000c033e18f707b1c0
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,8 +25,7 @@
             android:name=".TakePhoto"
             android:label="@string/title_activity_take_photo"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.csci5448.photodroid.MainActivity" />
