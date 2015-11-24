@@ -20,18 +20,16 @@ import java.net.URI;
 
 // Code adapted from http://javatechig.com/android/writing-image-picker-using-intent-in-android
 public class LoadPhoto extends AppCompatActivity {
-    private final int SELECT_PHOTO=1;
-    private Bitmap selectedImage;
-    private ImageView selectedView;
+
+    private Photo currentPhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_photo);
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
-        startActivityForResult(i, SELECT_PHOTO);
-        selectedView=(ImageView) findViewById(R.id.SelectPhotoImageView);
-        //selectedView.setRotation(90);
+        startActivityForResult(i, 1);
+
     }
 
     @Override
@@ -58,20 +56,26 @@ public class LoadPhoto extends AppCompatActivity {
     @Override
     // Rotate code from http://stackoverflow.com/questions/9015372/how-to-rotate-a-bitmap-90-degrees
     protected void onActivityResult(int requestCode, int resultCode, Intent galIntent){
-            Matrix rotate90 = new Matrix();
-            rotate90.postRotate(90);
-            Uri imageURI= galIntent.getData();
-            try {
-                selectedImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURI));
-                // Rotate to fit screen
-                if(selectedImage.getWidth() > selectedImage.getHeight()) {
-                    selectedImage = Bitmap.createBitmap(selectedImage, 0, 0, selectedImage.getWidth(), selectedImage.getHeight(), rotate90, true);
+            Bitmap selectedImage;
+            if (resultCode == RESULT_OK) {
+                Matrix rotate90 = new Matrix();
+                rotate90.postRotate(90);
+                Uri imageURI = galIntent.getData();
+                try {
+                    selectedImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURI));
+                    // Rotate to fit screen
+                    if (selectedImage.getWidth() > selectedImage.getHeight()) {
+                        selectedImage = Bitmap.createBitmap(selectedImage, 0, 0, selectedImage.getWidth(), selectedImage.getHeight(), rotate90, true);
+                    }
+                    currentPhoto = new Photo(selectedImage,(ImageView) findViewById(R.id.SelectPhotoImageView));
+                    currentPhoto.setImageResource();
+
+                } catch (Exception e) {
+
                 }
-                selectedView.setImageBitmap(selectedImage);
-
             }
-            catch(Exception e) {
-
+        else{
+                this.finish(); // Photo not selected, go to home page
             }
      }
 
