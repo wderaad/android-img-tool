@@ -68,6 +68,7 @@ public class LoadPhoto extends AppCompatActivity {
                     selectedImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURI));
 
                     //If the selected image is > (2048x2048) then scale the picture down
+                    //From: http://stackoverflow.com/questions/10271020/bitmap-too-large-to-be-uploaded-into-a-texture
                     if ((selectedImage.getHeight() > 2048) || (selectedImage.getWidth() > 2048))
                     {
                         Log.w(TAG, "Resizing image!\n");
