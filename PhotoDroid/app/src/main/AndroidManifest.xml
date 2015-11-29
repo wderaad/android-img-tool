@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.csci5448.photodroid" >
  HEAD
+    <!-- Camera permission i.e. access device camera -->
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <!-- Read data i.e. load photos into app permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!-- Write data i.e. save edited photos permission -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 =======
     
     <uses-sdk

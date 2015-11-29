@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +23,15 @@ import java.net.URI;
 public class LoadPhoto extends AppCompatActivity {
 
     private Photo currentPhoto;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_photo);
-        Intent i = new Intent(Intent.ACTION_PICK);
-        i.setType("image/*");
-        startActivityForResult(i, 1);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
 
     }
 
@@ -71,12 +74,14 @@ public class LoadPhoto extends AppCompatActivity {
                     currentPhoto.setImageResource();
 
                 } catch (Exception e) {
-
+                    //output error to log
+                    Log.e(TAG, "exception", e);
                 }
             }
         else{
-                this.finish(); // Photo not selected, go to home page
-            }
+            Log.w(TAG, "exiting!\n");
+            this.finish(); // Photo not selected, go to home page
+        }
      }
 
 }

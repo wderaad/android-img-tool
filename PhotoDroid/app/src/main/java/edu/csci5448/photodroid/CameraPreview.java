@@ -15,6 +15,7 @@ import java.io.IOException;
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     public CameraPreview(Context context, Camera camera) {
         super(context);
@@ -34,7 +35,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
         } catch (IOException e) {
-
+            //output error to log
+            Log.e(TAG, "exception", e);
         }
     }
 
@@ -56,6 +58,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.stopPreview();
         } catch (Exception e){
             // ignore: tried to stop a non-existent preview
+            Log.e(TAG, "exception", e);
         }
 
         // set preview size and make any resize, rotate or
@@ -67,7 +70,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.startPreview();
 
         } catch (Exception e){
-
+            //output error to log
+            Log.e(TAG, "exception", e);
         }
     }
 }

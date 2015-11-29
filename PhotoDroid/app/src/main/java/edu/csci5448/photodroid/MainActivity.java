@@ -1,5 +1,9 @@
 package edu.csci5448.photodroid;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -7,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -15,14 +21,17 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
+import java.io.InputStream;
+
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
+
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch(status) {
                 case LoaderCallbackInterface.SUCCESS:
-                    Log.i(TAG, "OpenCV Manager Connected");
+                    Log.i(TAG, "OpenCV Manager Connected!");
                     //from now onwards, you can use OpenCV API
                     break;
                 case LoaderCallbackInterface.INIT_FAILED:
@@ -66,7 +75,6 @@ public class MainActivity extends Activity {
     public void onTakePhoto(View v){
         Intent intent = new Intent(this, TakePhoto.class);
         startActivity(intent);
-
     }
 
     @Override
@@ -90,4 +98,6 @@ public class MainActivity extends Activity {
         //initialize OpenCV manager
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
     }
+
+
 }
