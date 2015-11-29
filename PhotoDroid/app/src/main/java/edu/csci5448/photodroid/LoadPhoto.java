@@ -66,10 +66,21 @@ public class LoadPhoto extends AppCompatActivity {
                 Uri imageURI = galIntent.getData();
                 try {
                     selectedImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageURI));
+
+                    //If the selected image is > (2048x2048) then scale the picture down
+                    if ((selectedImage.getHeight() > 2048) || (selectedImage.getWidth() > 2048))
+                    {
+                        Log.w(TAG, "Resizing image!\n");
+                        int newSize = (int) (selectedImage.getHeight() * (512.0 / selectedImage.getWidth()));
+                        selectedImage = Bitmap.createScaledBitmap(selectedImage, 512, newSize, true);
+                    }
+
                     // Rotate to fit screen
                     if (selectedImage.getWidth() > selectedImage.getHeight()) {
                         selectedImage = Bitmap.createBitmap(selectedImage, 0, 0, selectedImage.getWidth(), selectedImage.getHeight(), rotate90, true);
                     }
+
+                    //Display image to screen
                     currentPhoto = new Photo(selectedImage,(ImageView) findViewById(R.id.SelectPhotoImageView));
                     currentPhoto.setImageResource();
 
