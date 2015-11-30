@@ -92,11 +92,7 @@ public class LoadPhoto extends AppCompatActivity {
 
                     Intent intent = new Intent(this,EditPhoto.class);
                     startActivity(intent);
-
-
-                    //Display image to screen
-                    currentPhoto = new Photo(selectedImage,(ImageView) findViewById(R.id.SelectPhotoImageView));
-                    currentPhoto.setImageResource();
+                    this.finish();
 
                 } catch (Exception e) {
                     //output error to log
