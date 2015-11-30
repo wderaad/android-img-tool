@@ -1,5 +1,6 @@
 package edu.csci5448.photodroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.hardware.Camera;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
 // Some code adapted from http://developer.android.com/guide/topics/media/camera.html#custom-camera
@@ -18,6 +20,7 @@ public class
         private Camera mCamera;
         private CameraPreview mPreview;
         private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +53,6 @@ public class
             //output error to log
             Log.e(TAG, "exception", e);
         }
-
-
     }
 
     @Override
@@ -75,5 +76,4 @@ public class
 
         return super.onOptionsItemSelected(item);
     }
-
 }
