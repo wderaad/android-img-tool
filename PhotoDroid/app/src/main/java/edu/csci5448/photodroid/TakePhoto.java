@@ -32,7 +32,8 @@ public class TakePhoto extends AppCompatActivity {
     private Button imageButton;//for taking photos
     //For saving images
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    public static final int MEDIA_TYPE_IMAGE = 1;
+    private static final int MEDIA_TYPE_IMAGE = 1;
+    private boolean finished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +57,23 @@ public class TakePhoto extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         //Release camera resources
+        Log.w(TAG, "Releasing Camera!\n");
+        mCamera.stopPreview();//required step
         mCamera.release();
         mCamera= null;
-
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mCamera != null) {
+            Log.w(TAG, "Releasing Camera!\n");
+            mCamera.stopPreview();
+            mCamera.release();        // release the camera for other applications
+            mCamera = null;
+        }
+    }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -107,6 +121,7 @@ public class TakePhoto extends AppCompatActivity {
                 Log.w(TAG, "Taking Photo!\n");
                 // get an image from the camera
                 mCamera.takePicture(null, null, mPicture);
+                //I suggest popping up a button around here to see if user wants to keep or delete image
             }
         });
     }
@@ -128,6 +143,14 @@ public class TakePhoto extends AppCompatActivity {
                 fos.write(data);
                 fos.close();
                 Log.w(TAG, "Saved!\n");
+                finished = true;
+
+                if(finished)
+                {
+                    //return to parent
+                    finish();
+                }
+
             } catch (FileNotFoundException e) {
                 Log.d(TAG, "File not found: " + e.getMessage());
             } catch (IOException e) {
@@ -157,7 +180,7 @@ public class TakePhoto extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +"PhotoDroid"+ timeStamp + ".jpg");
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +"PhotoDroidImg"+ timeStamp + ".jpg");
             Log.w(TAG, "Created Media file" + mediaFile + "\n");
         }
         else {
