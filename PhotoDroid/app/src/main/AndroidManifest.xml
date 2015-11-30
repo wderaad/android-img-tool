@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.csci5448.photodroid" >
- HEAD
-    <!-- Camera permission i.e. access device camera -->
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-    <!-- Read data i.e. load photos into app permission -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <!-- Write data i.e. save edited photos permission -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-=======
-    
+    package="edu.csci5448.photodroid">
+
     <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="23" />
-    
->>>>>>> 622368ad41cb47d6a92d6d000c033e18f707b1c0
+    HEAD
+    <!-- Camera permission i.e. access device camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Read data i.e. load photos into app permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Write data i.e. save edited photos permission -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    =======
+    >>>>>>> 622368ad41cb47d6a92d6d000c033e18f707b1c0
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +37,8 @@
             android:name=".TakePhoto"
             android:label="@string/title_activity_take_photo"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.csci5448.photodroid.MainActivity" />
@@ -45,12 +47,16 @@
             android:name=".LoadPhoto"
             android:label="@string/title_activity_load_photo"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.csci5448.photodroid.MainActivity" />
         </activity>
+        <activity
+            android:name=".EditPhoto"
+            android:label="@string/title_activity_edit_photo"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
