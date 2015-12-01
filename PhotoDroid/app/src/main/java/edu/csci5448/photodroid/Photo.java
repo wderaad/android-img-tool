@@ -9,18 +9,45 @@ import android.widget.ImageView;
 public class Photo {
     private Bitmap currentPhoto;
     private ImageView frame;
+
+    public Photo()
+    {
+        //Call constructor with methods
+        this(null,null);
+    }
+
     public Photo(Bitmap desiredPhoto, ImageView desiredFrame){
-        currentPhoto=desiredPhoto;
-        frame = desiredFrame;
-
-
+        setCurrentPhoto(desiredPhoto);
+        setFrame(desiredFrame);
     }
+
+    //copy constructor
+    public Photo(Photo photo){
+        //Set all properties exactly the same
+        this(photo.getCurrentPhoto(),photo.getFrame());
+    }
+
     public void setImageResource(){
-        frame.setImageBitmap(currentPhoto);
-
+        this.getFrame().setImageBitmap(this.getCurrentPhoto());
     }
-    public void filterPhoto(String str){
 
+    //getters and setters for photo
+    public Bitmap getCurrentPhoto()
+    {
+        return this.currentPhoto;
+    }
 
+    private void setCurrentPhoto(Bitmap bitmap)
+    {
+        this.currentPhoto = bitmap;
+    }
+
+    public ImageView getFrame()
+    {
+        return this.frame;
+    }
+
+    private void setFrame(ImageView iview){
+        this.frame = iview;
     }
 }
