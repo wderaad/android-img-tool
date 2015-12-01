@@ -14,6 +14,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.InputStream;
@@ -41,10 +42,10 @@ public class EditPhoto extends AppCompatActivity {
             setBitmap(null);
             this.finish();
         }
-        Log.w(TAG, "height: " + getBitmap().getHeight());
         tempPhoto = new Photo(getBitmap(),(ImageView)findViewById(R.id.EditPhotoImageView));
         setPhoto(tempPhoto);
-        getPhoto().setImageResource();
+        getPhoto().setImageResource();//check photo was set correctly
+        tempPhoto = null;//return to garbage collector
     }
 
 
@@ -57,12 +58,16 @@ public class EditPhoto extends AppCompatActivity {
     }
 
     public void onBlurSelected(View v){
+        Photo tempPhoto;
         //Converting bitmap to Mat
         Mat ImageMat = new Mat (getBitmap().getHeight(), getBitmap().getWidth(), CvType.CV_8U, new Scalar(4));
         Bitmap myBitmap32 = getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Utils.bitmapToMat(myBitmap32, ImageMat);
+        //Set kernel size:
+        org.opencv.core.Size size = new Size(25,25);
 
-        //STUB--Do image processing with opencv here
+        //Do image processing (Blur) with opencv here
+        Imgproc.GaussianBlur(ImageMat, ImageMat,size, 4);
 
         //Convert Mat back to bitmap
         Bitmap resultBitmap = Bitmap.createBitmap(ImageMat.cols(),  ImageMat.rows(),Bitmap.Config.ARGB_8888);;
@@ -71,7 +76,14 @@ public class EditPhoto extends AppCompatActivity {
         //Set object bitmap to the result
         setBitmap(resultBitmap);
 
+        //*****THIS SHOULD BE ITS OWN METHOD EVENTUALLY*****
         //Stub--probably need to return to the image display here
+        //For now just redisplay inside method
+        Log.d(TAG, "Redisplaying blurred image\n");
+        tempPhoto = new Photo(getBitmap(),(ImageView)findViewById(R.id.EditPhotoImageView));
+        setPhoto(tempPhoto);
+        getPhoto().setImageResource();//check photo was set correctly
+        tempPhoto = null;//return to garbage collector
     }
 
     //getter for mainPhoto

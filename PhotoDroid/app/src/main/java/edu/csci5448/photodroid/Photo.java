@@ -12,7 +12,7 @@ public class Photo {
 
     public Photo()
     {
-        //Call constructor with methods
+        //Call constructor with null variables
         this(null,null);
     }
 
