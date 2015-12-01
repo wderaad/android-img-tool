@@ -17,10 +17,9 @@
         android:layout_alignParentTop="true" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Photo"
+        android:text="Save Changes"
         android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -28,10 +27,9 @@
         android:onClick="onSavePhoto" />/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DiscardPhoto"
+        android:text="Discard Changes"
         android:id="@+id/button2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

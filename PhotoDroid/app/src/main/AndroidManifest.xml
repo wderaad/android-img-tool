@@ -12,11 +12,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- Write data i.e. save edited photos permission -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <!-- Allows read only access to phone state -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Lets camera autofocus -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     =======
     >>>>>>> 622368ad41cb47d6a92d6d000c033e18f707b1c0
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"

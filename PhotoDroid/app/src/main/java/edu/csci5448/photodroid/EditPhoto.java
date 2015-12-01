@@ -34,8 +34,6 @@ public class EditPhoto extends AppCompatActivity {
 
     public void onDiscardPhoto(View v){
         this.finish();
-
-
     }
 
     public void onSavePhoto(View v){
