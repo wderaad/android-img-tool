@@ -138,6 +138,7 @@ public class EditPhoto extends AppCompatActivity {
     }
 
     //Contours effect: Contours can be explained simply as a curve joining all the continuous points (along the boundary), having same color or intensity.
+    //http://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours
     public void onContoursSelected(View v){
         //Set kernel size of blur effect (can be increase/decreased):
         org.opencv.core.Size size = new Size(3,3);//filter levels
