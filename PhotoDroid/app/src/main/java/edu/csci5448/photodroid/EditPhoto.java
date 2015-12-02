@@ -23,6 +23,8 @@ public class EditPhoto extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Photo mainPhoto;
     private Bitmap loadedBitmap;//need to be able to access this inside filter methods
+    //custom kernels for filters
+    private Mat Sharpenkernel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,9 @@ public class EditPhoto extends AppCompatActivity {
         setPhoto(tempPhoto);
         getPhoto().setImageResource();//check photo was set correctly
         tempPhoto = null;//return to garbage collector
+
+        //initialize all custom kernels
+        initializeKernels();
 
         return;
     }
@@ -114,20 +119,7 @@ public class EditPhoto extends AppCompatActivity {
         Bitmap myBitmap32 = getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Utils.bitmapToMat(myBitmap32, imageMat);
 
-        //create own kernel to run over image
-        Mat kernel = new Mat(3, 3, CvType.CV_32F);//create 3x3 matrix
-        //.put(row,col,value)
-        kernel.put(0,0,-1);
-        kernel.put(0,1,-1);
-        kernel.put(0,2,-1);
-        kernel.put(1,0,-1);
-        kernel.put(1,1,9);
-        kernel.put(1,2,-1);
-        kernel.put(2,0,-1);
-        kernel.put(2,1,-1);
-        kernel.put(2,2,-1);
-
-        Imgproc.filter2D(imageMat, imageMat, -1, kernel);
+        Imgproc.filter2D(imageMat, imageMat, -1, Sharpenkernel);
 
         //Convert Mat back to bitmap
         Bitmap resultBitmap = Bitmap.createBitmap(imageMat.cols(),imageMat.rows(),Bitmap.Config.ARGB_8888);;
@@ -135,6 +127,30 @@ public class EditPhoto extends AppCompatActivity {
 
         //Redisplay edited image
         redisplay(resultBitmap);
+
+        return;
+    }
+
+    //method to initialize kernels
+    public void initializeKernels()
+    {
+        //Sharpen Kernel
+        /*
+            -1 -1 -1
+            -1  9 -1
+            -1 -1 -1
+         */
+        this.Sharpenkernel = new Mat(3, 3, CvType.CV_32F);//create 3x3 matrix
+        //.put(row,col,value)
+        this.Sharpenkernel.put(0,0,-1);
+        this.Sharpenkernel.put(0,1,-1);
+        this.Sharpenkernel.put(0,2,-1);
+        this.Sharpenkernel.put(1,0,-1);
+        this.Sharpenkernel.put(1,1,9);
+        this.Sharpenkernel.put(1,2,-1);
+        this.Sharpenkernel.put(2,0,-1);
+        this.Sharpenkernel.put(2,1,-1);
+        this.Sharpenkernel.put(2,2,-1);
 
         return;
     }
