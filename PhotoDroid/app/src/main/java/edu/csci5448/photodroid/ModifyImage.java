@@ -2,7 +2,6 @@ package edu.csci5448.photodroid;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.Config;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EditPhoto extends AppCompatActivity {
+public class ModifyImage extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Photo mainPhoto;
     private Bitmap loadedBitmap;//need to be able to access this inside filter methods
@@ -37,7 +35,7 @@ public class EditPhoto extends AppCompatActivity {
         Bitmap tempBitmap;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_photo);
+        setContentView(R.layout.activity_modify_image);
         // load bitmap from previous activity, if it fails, finish
         try {
             InputStream bitmapIn = openFileInput("bitmap.png");
