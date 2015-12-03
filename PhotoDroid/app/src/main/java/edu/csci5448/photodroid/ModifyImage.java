@@ -2,6 +2,7 @@ package edu.csci5448.photodroid;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,9 +64,12 @@ public class ModifyImage extends AppCompatActivity {
         this.finish();
         return;
     }
-
+    // from http://stackoverflow.com/questions/8560501/android-save-image-into-gallery
     public void onSavePhoto(View v){
-        return;
+        MediaStore.Images.Media.insertImage(getContentResolver(),loadedBitmap,"PhotoDroid-Photo","Modified-Photo");
+        this.finish();
+
+
     }
 
     //this method redisplays the edited bitmap
