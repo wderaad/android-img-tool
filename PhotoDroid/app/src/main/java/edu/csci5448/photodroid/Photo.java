@@ -7,7 +7,7 @@ import android.widget.ImageView;
  * Created by -Derek- on 11/24/2015.
  */
 public class Photo {
-    private Bitmap currentPhoto;
+    private Bitmap currentBitmap;
     private ImageView frame;
 
     public Photo()
@@ -17,29 +17,29 @@ public class Photo {
     }
 
     public Photo(Bitmap desiredPhoto, ImageView desiredFrame){
-        setCurrentPhoto(desiredPhoto);
+        setCurrentBitmap(desiredPhoto);
         setFrame(desiredFrame);
     }
 
     //copy constructor
     public Photo(Photo photo){
         //Set all properties exactly the same
-        this(photo.getCurrentPhoto(),photo.getFrame());
+        this(photo.getCurrentBitmap(),photo.getFrame());
     }
 
     public void setImageResource(){
-        this.getFrame().setImageBitmap(this.getCurrentPhoto());
+        this.getFrame().setImageBitmap(this.getCurrentBitmap());
     }
 
     //getters and setters for photo
-    public Bitmap getCurrentPhoto()
+    public Bitmap getCurrentBitmap()
     {
-        return this.currentPhoto;
+        return this.currentBitmap;
     }
 
-    private void setCurrentPhoto(Bitmap bitmap)
+    private void setCurrentBitmap(Bitmap bitmap)
     {
-        this.currentPhoto = bitmap;
+        this.currentBitmap = bitmap;
     }
 
     public ImageView getFrame()
@@ -50,4 +50,5 @@ public class Photo {
     private void setFrame(ImageView iview){
         this.frame = iview;
     }
+
 }

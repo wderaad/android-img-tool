@@ -17,6 +17,8 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Core;
+
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class ModifyImage extends AppCompatActivity {
     private Bitmap loadedBitmap;//need to be able to access this inside filter methods
     //custom kernels for filters
     private Mat Sharpenkernel;
+    private PhotoController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +87,8 @@ public class ModifyImage extends AppCompatActivity {
         tempPhoto = new Photo(getBitmap(),(ImageView)findViewById(R.id.EditPhotoImageView));
         setPhoto(tempPhoto);
         getPhoto().setImageResource();//check photo was set correctly
-        tempPhoto = null;//return to garbage collector
 
-        return;
+        //this.controller.getCurrentPhoto().setImageResource();
     }
 
     //Blur effect
@@ -122,16 +124,20 @@ public class ModifyImage extends AppCompatActivity {
         Mat imageMatCopy;//for subtracting from original image
 
         //Converting bitmap to Mat
-        Mat imageMat = new Mat (getBitmap().getHeight(), getBitmap().getWidth(), CvType.CV_8UC3);
+        Mat source = new Mat (getBitmap().getHeight(), getBitmap().getWidth(), CvType.CV_8UC3);
+        Mat dest = new Mat(source.rows(),source.cols(),source.type());
+
         Bitmap myBitmap32 = getBitmap().copy(Bitmap.Config.ARGB_8888, true);
-        Utils.bitmapToMat(myBitmap32, imageMat);
+        Utils.bitmapToMat(myBitmap32, source);
 
         //Perform image sharpening with custom filter
-        Imgproc.filter2D(imageMat, imageMat, -1, Sharpenkernel);
+        //Imgproc.filter2D(imageMat, imageMat, -1, Sharpenkernel);
+        Imgproc.GaussianBlur(source, dest, size, sigmaX);
+        Core.addWeighted(source, 1.5, dest, -0.5, 0, dest);
 
         //Convert Mat back to bitmap
-        Bitmap resultBitmap = Bitmap.createBitmap(imageMat.cols(),imageMat.rows(),Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(imageMat, resultBitmap);
+        Bitmap resultBitmap = Bitmap.createBitmap(dest.cols(),dest.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(dest, resultBitmap);
 
         //Redisplay edited image
         redisplay(resultBitmap);
