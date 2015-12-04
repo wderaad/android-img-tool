@@ -2,6 +2,9 @@ package edu.csci5448.photodroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -120,16 +124,21 @@ public class TakePhoto extends AppCompatActivity {
 
                 Log.w(TAG, "Taking Photo!\n");
                 // get an image from the camera
-                mCamera.takePicture(null, null, mPicture);
+                mCamera.takePicture(null, null, null, mPicture);
                 //I suggest popping up a button around here to see if user wants to keep or delete image
+
             }
         });
     }
-
+    // Rotate code from http://stackoverflow.com/questions/9015372/how-to-rotate-a-bitmap-90-degrees
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-
+            Bitmap takenBitmap;
+            OutputStream outbitpng;
+            Matrix rotate90 = new Matrix();
+            rotate90.postRotate(90);
+            /*
             //Returns generic name for image
             File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             if (pictureFile == null){
@@ -155,7 +164,24 @@ public class TakePhoto extends AppCompatActivity {
                 Log.d(TAG, "File not found: " + e.getMessage());
             } catch (IOException e) {
                 Log.d(TAG, "Error accessing file: " + e.getMessage());
+            }*/
+            takenBitmap= BitmapFactory.decodeByteArray(data, 0, data.length);
+            takenBitmap= Bitmap.createScaledBitmap(takenBitmap, (int) takenBitmap.getWidth() / 4, (int) takenBitmap.getHeight() / 4, false);
+            if (takenBitmap.getWidth() > takenBitmap.getHeight()) {
+                takenBitmap = Bitmap.createBitmap(takenBitmap, 0, 0, takenBitmap.getWidth(), takenBitmap.getHeight(), rotate90, true);
             }
+            try {
+                outbitpng = openFileOutput("bitmap.png", Context.MODE_PRIVATE);
+                takenBitmap.compress(Bitmap.CompressFormat.PNG,100,outbitpng);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(TakePhoto.this,ModifyImage.class);
+            startActivity(intent);
+            TakePhoto.this.finish();
+
+
         }
     };
 

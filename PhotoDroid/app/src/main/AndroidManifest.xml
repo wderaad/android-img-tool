@@ -16,10 +16,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- Lets camera autofocus -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     =======
     >>>>>>> 622368ad41cb47d6a92d6d000c033e18f707b1c0
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -58,7 +56,8 @@
         <activity
             android:name=".ModifyImage"
             android:label="@string/title_activity_edit_photo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AcceptRejectPhoto"></activity>
     </application>
 
 </manifest>
