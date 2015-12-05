@@ -7,15 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.io.InputStream;
 
-
-public class ModifyImage extends AppCompatActivity {
+// spinner code adapted from http://developer.android.com/guide/topics/ui/controls/spinner.html
+public class ModifyImage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private PhotoController controller = new PhotoController();
-
+    private Spinner FilterSpin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bitmap bitmap;
@@ -35,6 +38,13 @@ public class ModifyImage extends AppCompatActivity {
             this.finish();
         }
         controller.getCurrentPhoto().setImageResource();
+
+        // Set up the spinner:
+        FilterSpin= (Spinner)findViewById(R.id.filterselect);
+        ArrayAdapter<CharSequence> filteradapter = ArrayAdapter.createFromResource(this, R.array.filter_array, android.R.layout.simple_spinner_dropdown_item);
+        filteradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        FilterSpin.setAdapter(filteradapter);
+        FilterSpin.setOnItemSelectedListener(this);
     }
 
 
@@ -81,6 +91,19 @@ public class ModifyImage extends AppCompatActivity {
 
         //Redisplay edited image
         redisplay();
+
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+        String temp=(String)FilterSpin.getSelectedItem();
+        controller.setCurrentPhoto(new Photo(
+                controller.applyFilter(temp),(ImageView)findViewById(R.id.EditPhotoImageView)));
+
+        //Redisplay edited image
+        FilterSpin.setSelection(0);
+        redisplay();
+    }
+    public void onNothingSelected(AdapterView<?> parent){
 
     }
 }

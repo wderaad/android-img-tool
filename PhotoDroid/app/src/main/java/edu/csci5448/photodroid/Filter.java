@@ -27,13 +27,13 @@ public final class Filter {
     public static Bitmap filterPhoto(Bitmap photo, String type){
         Bitmap filteredPhoto;
         switch (type){
-            case "blur":
+            case "Blur":
                 filteredPhoto = blur(photo);
                 break;
-            case "sharpen":
+            case "Sharpen":
                 filteredPhoto = sharpen(photo);
                 break;
-            case "contour":
+            case "Countours":
                 filteredPhoto = contour(photo);
                 break;
             default:

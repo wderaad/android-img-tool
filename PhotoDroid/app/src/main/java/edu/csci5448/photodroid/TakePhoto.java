@@ -138,33 +138,7 @@ public class TakePhoto extends AppCompatActivity {
             OutputStream outbitpng;
             Matrix rotate90 = new Matrix();
             rotate90.postRotate(90);
-            /*
-            //Returns generic name for image
-            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            if (pictureFile == null){
-                Log.d(TAG, "Error creating media file, check storage permissions: ");
-                return;
-            }
 
-            try {
-                Log.w(TAG, "Saving!\n");
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
-                Log.w(TAG, "Saved!\n");
-                finished = true;
-
-                if(finished)
-                {
-                    //return to parent
-                    finish();
-                }
-
-            } catch (FileNotFoundException e) {
-                Log.d(TAG, "File not found: " + e.getMessage());
-            } catch (IOException e) {
-                Log.d(TAG, "Error accessing file: " + e.getMessage());
-            }*/
             takenBitmap= BitmapFactory.decodeByteArray(data, 0, data.length);
             takenBitmap= Bitmap.createScaledBitmap(takenBitmap, (int) takenBitmap.getWidth() / 4, (int) takenBitmap.getHeight() / 4, false);
             if (takenBitmap.getWidth() > takenBitmap.getHeight()) {
@@ -177,7 +151,7 @@ public class TakePhoto extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Intent intent = new Intent(TakePhoto.this,ModifyImage.class);
+            Intent intent = new Intent(TakePhoto.this,AcceptRejectPhoto.class);
             startActivity(intent);
             TakePhoto.this.finish();
 

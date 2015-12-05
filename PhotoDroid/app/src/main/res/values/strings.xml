@@ -4,4 +4,13 @@
     <string name="title_activity_take_photo">TakePhoto</string>
     <string name="title_activity_load_photo">LoadPhoto</string>
     <string name="title_activity_edit_photo">EditPhoto</string>
+
+    <string-array name="filter_array">
+        <item>Select Filter</item>
+        <item>Blur</item>
+        <item>Sharpen</item>
+        <item>Countours</item>
+
+
+    </string-array>
 </resources>
