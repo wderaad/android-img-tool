@@ -10,7 +10,7 @@
         <item>Blur</item>
         <item>Sharpen</item>
         <item>Countours</item>
-
+        <item>Laplacian Edge</item>
 
     </string-array>
 </resources>

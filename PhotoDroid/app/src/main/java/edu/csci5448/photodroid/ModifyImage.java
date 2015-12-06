@@ -47,7 +47,6 @@ public class ModifyImage extends AppCompatActivity implements AdapterView.OnItem
         FilterSpin.setOnItemSelectedListener(this);
     }
 
-
     public void onDiscardPhoto(View v){
         this.finish();
     }
@@ -56,7 +55,6 @@ public class ModifyImage extends AppCompatActivity implements AdapterView.OnItem
         controller.rejectPhoto();
         redisplay();
     }
-
 
     // from http://stackoverflow.com/questions/8560501/android-save-image-into-gallery
     public void onSavePhoto(View v){

@@ -36,6 +36,9 @@ public final class Filter {
             case "Countours":
                 filteredPhoto = contour(photo);
                 break;
+            case "Laplacian Edge":
+                filteredPhoto = laplaceEdge(photo);
+                break;
             default:
                 filteredPhoto = photo;
                 break;
@@ -133,6 +136,54 @@ public final class Filter {
         Utils.matToBitmap(drawing, resultBitmap);
 
         //Redisplay edited image
+        return resultBitmap;
+    }
+
+    private static Bitmap laplaceEdge(Bitmap photo){
+        //Set kernel size of blur effect (can be increase/decreased):
+        org.opencv.core.Size size = new Size(3,3);//filter levels
+        int sigmaX = 3;//filter width
+        int depth = CvType.CV_16S;
+        int kernelSize = 3;
+        int scale = 1;
+        int delta = 0;
+        Mat imageMatGray;
+        Mat finalImage;
+        Mat absFinalImage;
+
+        //Converting bitmap to Mat
+        Mat imageMat = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Bitmap myBitmap32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        Utils.bitmapToMat(myBitmap32, imageMat);
+
+        //initialize image gray
+        imageMatGray = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, imageMatGray);
+
+        //initialize final image
+        finalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, finalImage);
+
+        //initialize absFinalImage
+        absFinalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, absFinalImage);
+
+        //Smooth the image to make edge detection more accurate
+        Imgproc.GaussianBlur(imageMat, imageMat, size, sigmaX);
+
+        //Convert to grayscale to make edges more apparent
+        Imgproc.cvtColor(imageMat, imageMatGray, Imgproc.COLOR_RGB2GRAY);
+
+        //Do image processing (Blur) with opencv here
+        Imgproc.Laplacian(imageMatGray, finalImage, depth, kernelSize, scale, delta);
+        //convert one more time
+        Core.convertScaleAbs(finalImage, absFinalImage);
+
+        //Convert Mat back to bitmap
+        Bitmap resultBitmap = Bitmap.createBitmap(absFinalImage.cols(),absFinalImage.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(absFinalImage, resultBitmap);
+
+        //Return edited image
         return resultBitmap;
     }
 }

@@ -2,7 +2,6 @@ package edu.csci5448.photodroid;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-
 /**
  * Created by wjderaad on 12/2/15.
  */
