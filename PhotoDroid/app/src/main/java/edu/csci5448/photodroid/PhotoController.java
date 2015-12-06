@@ -27,10 +27,6 @@ public class PhotoController {
         return currentPhoto;
     }
 
-    public void clearStack(){
-        photoStack.clear();
-    }
-
     public Bitmap applyFilter(String type){ //TODO
 
         return Filter.filterPhoto(currentPhoto.getCurrentBitmap(), type);
@@ -47,10 +43,6 @@ public class PhotoController {
 
     }
 
-    public void updateView(){
-
-    }
-
     public void rejectPhoto(){
         try{
             this.currentPhoto = photoStack.pop();
@@ -58,10 +50,6 @@ public class PhotoController {
         }catch (Exception e){
             Log.w(TAG, "rejectPhoto: "+e.toString()+"\n");
         }
-
-    }
-
-    public void acceptPhoto(){
 
     }
 

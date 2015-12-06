@@ -16,10 +16,6 @@ public class PhotoStack {
     }
 
     public Photo pop(){
-        //If the only photo, leave it in the stack
-        if (photoStack.size() == 1){
-            photoStack.peek();
-        }
         return photoStack.pop();
     }
     public void push(Photo photo){
