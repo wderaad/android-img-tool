@@ -48,6 +48,9 @@ public final class Filter {
             case "Dilation":
                 filteredPhoto = dilation(photo);
                 break;
+            case "Brighten":
+                filteredPhoto = brighten(photo);
+                break;
             default:
                 filteredPhoto = photo;
                 break;
@@ -278,6 +281,31 @@ public final class Filter {
 
         /// Apply erosion to image
         Imgproc.dilate(imageMat, finalImage, element);
+
+        //Convert Mat back to bitmap
+        Bitmap resultBitmap = Bitmap.createBitmap(finalImage.cols(),finalImage.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(finalImage, resultBitmap);
+
+        //Return edited image
+        return resultBitmap;
+    }
+
+    //Brighten
+    private static Bitmap brighten(Bitmap photo){
+        Mat finalImage;
+        final double alpha = 1;
+        final double beta = 30;
+        //Converting bitmap to Mat
+        Mat imageMat = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Bitmap myBitmap32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        Utils.bitmapToMat(myBitmap32, imageMat);
+
+        //initialize final image
+        finalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, finalImage);
+
+        //Brighten image
+        imageMat.convertTo(finalImage, -1, alpha, beta);
 
         //Convert Mat back to bitmap
         Bitmap resultBitmap = Bitmap.createBitmap(finalImage.cols(),finalImage.rows(),Bitmap.Config.ARGB_8888);
