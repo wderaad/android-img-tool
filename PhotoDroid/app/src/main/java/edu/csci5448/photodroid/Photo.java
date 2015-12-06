@@ -51,4 +51,17 @@ public class Photo {
         this.frame = iview;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Photo)) {
+            return false;
+        }
+
+        Photo that = (Photo) other;
+
+        // Custom equality check here.
+        return this.currentBitmap.equals(that.currentBitmap)
+                && this.frame.equals(that.frame);
+    }
+
 }
