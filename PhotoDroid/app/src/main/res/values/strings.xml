@@ -11,6 +11,6 @@
         <item>Sharpen</item>
         <item>Countours</item>
         <item>Laplacian Edge</item>
-
+        <item>Grayscale</item>
     </string-array>
 </resources>

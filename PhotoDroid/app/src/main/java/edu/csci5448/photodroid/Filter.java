@@ -39,6 +39,9 @@ public final class Filter {
             case "Laplacian Edge":
                 filteredPhoto = laplaceEdge(photo);
                 break;
+            case "Grayscale":
+                filteredPhoto = grayscale(photo);
+                break;
             default:
                 filteredPhoto = photo;
                 break;
@@ -139,6 +142,7 @@ public final class Filter {
         return resultBitmap;
     }
 
+    //Laplacian edge detection
     private static Bitmap laplaceEdge(Bitmap photo){
         //Set kernel size of blur effect (can be increase/decreased):
         org.opencv.core.Size size = new Size(3,3);//filter levels
@@ -165,7 +169,7 @@ public final class Filter {
         Utils.bitmapToMat(myBitmap32, finalImage);
 
         //initialize absFinalImage
-        absFinalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        absFinalImage = new Mat(photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
         Utils.bitmapToMat(myBitmap32, absFinalImage);
 
         //Smooth the image to make edge detection more accurate
@@ -182,6 +186,32 @@ public final class Filter {
         //Convert Mat back to bitmap
         Bitmap resultBitmap = Bitmap.createBitmap(absFinalImage.cols(),absFinalImage.rows(),Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(absFinalImage, resultBitmap);
+
+        //Return edited image
+        return resultBitmap;
+    }
+
+    //Grayscale image
+    private static Bitmap grayscale(Bitmap photo){
+        //Set kernel size of blur effect (can be increase/decreased):
+        org.opencv.core.Size size = new Size(3,3);//filter levels
+        Mat imageMatGray;
+
+        //Converting bitmap to Mat
+        Mat imageMat = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Bitmap myBitmap32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        Utils.bitmapToMat(myBitmap32, imageMat);
+
+        //initialize image gray
+        imageMatGray = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, imageMatGray);
+
+        //Convert to grayscale
+        Imgproc.cvtColor(imageMat, imageMatGray, Imgproc.COLOR_RGB2GRAY);
+
+        //Convert Mat back to bitmap
+        Bitmap resultBitmap = Bitmap.createBitmap(imageMatGray.cols(),imageMatGray.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(imageMatGray, resultBitmap);
 
         //Return edited image
         return resultBitmap;
