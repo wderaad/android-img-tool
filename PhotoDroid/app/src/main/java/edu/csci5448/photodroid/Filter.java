@@ -42,6 +42,12 @@ public final class Filter {
             case "Grayscale":
                 filteredPhoto = grayscale(photo);
                 break;
+            case "Erode":
+                filteredPhoto = erode(photo);
+                break;
+            case "Dilation":
+                filteredPhoto = dilation(photo);
+                break;
             default:
                 filteredPhoto = photo;
                 break;
@@ -212,6 +218,70 @@ public final class Filter {
         //Convert Mat back to bitmap
         Bitmap resultBitmap = Bitmap.createBitmap(imageMatGray.cols(),imageMatGray.rows(),Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(imageMatGray, resultBitmap);
+
+        //Return edited image
+        return resultBitmap;
+    }
+
+    //Morphology - erosion
+    private static Bitmap erode(Bitmap photo){
+        Mat finalImage;
+        int erosionSize = 1;//kernel size, at one gives a 3x3
+        //Can be 0 for rect, 1 for cross, or 2 for elipse
+        int erosionType = 0;//kernel type
+        org.opencv.core.Size size = new Size(2 * erosionSize + 1, 2 * erosionSize + 1);//filter levels
+        org.opencv.core.Point point = new org.opencv.core.Point(erosionSize, erosionSize);
+
+        //Converting bitmap to Mat
+        Mat imageMat = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Bitmap myBitmap32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        Utils.bitmapToMat(myBitmap32, imageMat);
+
+        //initialize final image
+        finalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, finalImage);
+
+        //Set erosion kernel
+        Mat element = Imgproc.getStructuringElement(erosionType, size, point);
+
+        /// Apply erosion to image
+        Imgproc.erode(imageMat, finalImage, element);
+
+        //Convert Mat back to bitmap
+        Bitmap resultBitmap = Bitmap.createBitmap(finalImage.cols(),finalImage.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(finalImage, resultBitmap);
+
+        //Return edited image
+        return resultBitmap;
+    }
+
+    //Morphology - dilation
+    private static Bitmap dilation(Bitmap photo){
+        Mat finalImage;
+        int erosionSize = 1;//kernel size, at one gives a 3x3
+        //Can be 0 for rect, 1 for cross, or 2 for elipse
+        int erosionType = 0;//kernel type
+        org.opencv.core.Size size = new Size(2 * erosionSize + 1, 2 * erosionSize + 1);//filter levels
+        org.opencv.core.Point point = new org.opencv.core.Point(erosionSize, erosionSize);
+
+        //Converting bitmap to Mat
+        Mat imageMat = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Bitmap myBitmap32 = photo.copy(Bitmap.Config.ARGB_8888, true);
+        Utils.bitmapToMat(myBitmap32, imageMat);
+
+        //initialize final image
+        finalImage = new Mat (photo.getHeight(), photo.getWidth(), CvType.CV_8UC3, new Scalar(4));
+        Utils.bitmapToMat(myBitmap32, finalImage);
+
+        //Set erosion kernel
+        Mat element = Imgproc.getStructuringElement(erosionType, size, point);
+
+        /// Apply erosion to image
+        Imgproc.dilate(imageMat, finalImage, element);
+
+        //Convert Mat back to bitmap
+        Bitmap resultBitmap = Bitmap.createBitmap(finalImage.cols(),finalImage.rows(),Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(finalImage, resultBitmap);
 
         //Return edited image
         return resultBitmap;

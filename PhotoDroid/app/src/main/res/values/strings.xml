@@ -12,5 +12,8 @@
         <item>Countours</item>
         <item>Laplacian Edge</item>
         <item>Grayscale</item>
+        <item>Erode</item>
+        <item>Dilation</item>
     </string-array>
+
 </resources>
